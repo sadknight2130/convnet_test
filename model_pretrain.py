@@ -36,3 +36,4 @@ class VGGNet(nn.Module):
                 features.append(x)
         return features
 
+

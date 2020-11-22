@@ -3,6 +3,7 @@ import torch
 import os
 import numpy as np
 from PIL import Image
+import torchvision
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -45,3 +46,11 @@ def load_image(image_path, transform=None, max_size=None, shape=None):
         image = transform(image).unsqueeze(0)
 
     return image.to(device)
+
+
+def load_mnist(data_path, transform, batch_size):
+    mnist_data = torchvision.datasets.MNIST(data_path, train=True, download=True, transform=transform)
+    mnist_loader = torch.utils.data.DataLoader(dataset=mnist_data,
+                                         batch_size=batch_size,
+                                         shuffle=True)
+    return mnist_loader
