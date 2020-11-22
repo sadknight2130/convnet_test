@@ -1,6 +1,10 @@
 from torchvision import datasets, transforms
 import torch
 import os
+import numpy as np
+from PIL import Image
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def load_data(data_dir, input_size, batch_size, mode_dict):
@@ -25,3 +29,19 @@ def load_data(data_dir, input_size, batch_size, mode_dict):
                                                        batch_size=batch_size, shuffle=True, num_workers=0) for x in
                         mode_dict}
     return dataloaders_dict
+
+
+def load_image(image_path, transform=None, max_size=None, shape=None):
+    image = Image.open(image_path)
+    if max_size:
+        scale = max_size / max(image.size)
+        size = np.array(image.size) * scale
+        image = image.resize(size.astype(int), Image.ANTIALIAS)
+
+    if shape:
+        image = image.resize(shape, Image.LANCZOS)
+
+    if transform:
+        image = transform(image).unsqueeze(0)
+
+    return image.to(device)
