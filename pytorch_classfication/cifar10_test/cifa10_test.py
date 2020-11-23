@@ -6,6 +6,7 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 import os
 import torch.optim as optim
+from tqdm import tqdm
 
 from utils.convnet import LeNet
 
@@ -36,7 +37,7 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     for epoch in range(num_epochs):
         running_loss = 0.
-        for idx, (data, target) in enumerate(train_loader):
+        for idx, (data, target) in tqdm(enumerate(train_loader)):
             data = data.to(device)
             target = target.to(device)
 
