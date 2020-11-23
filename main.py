@@ -1,14 +1,12 @@
-import numpy as np
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
-import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
-from convnet import Net
+from model.convnet import Net
 
 
-from train_eval import train, test
+from model.train_eval import train, test
 
 
 if __name__ == "__main__":

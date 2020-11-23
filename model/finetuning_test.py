@@ -1,20 +1,11 @@
-import numpy as np
-import torch
-import torchvision
-import torch.nn as nn
-from torchvision import datasets, transforms, models
-
 import matplotlib.pyplot as plt
-import time
-import os
-import copy
 
-from model_pretrain import *
-from train_eval import *
-from data_utils import *
+from model.model_pretrain import *
+from model.train_eval import *
+from model.data_utils import *
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-data_dir = ".\hymenoptera_data"
+data_dir = "../hymenoptera_data"
 model_name = "resnet"
 num_classes = 2
 batch_size = 32

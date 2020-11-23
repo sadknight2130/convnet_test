@@ -1,16 +1,10 @@
 from __future__ import division
-from torchvision import models
 from torchvision import transforms
-from PIL import Image
-import argparse
 import torch
-import torchvision
-import torch.nn as nn
-import numpy as np
 import matplotlib.pyplot as plt
 
-from data_utils import load_mnist
-from model_gan import *
+from model.data_utils import load_mnist
+from model.model_gan import *
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
