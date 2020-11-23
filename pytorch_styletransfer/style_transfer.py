@@ -2,8 +2,8 @@ from __future__ import division
 from torchvision import transforms
 import torch
 
-from model.data_utils import load_image
-from model.model_pretrain import VGGNet
+from utils.data_utils import load_image
+from utils.model_pretrain import VGGNet
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 dtype = torch.cuda.FloatTensor
@@ -15,8 +15,8 @@ transform = transforms.Compose([
 ])  # 来自ImageNet的mean和variance
 unloader = transforms.ToPILImage()  # reconvert into PIL image
 
-style = load_image("png/starry_night.jpg", transform, max_size=400)
-content = load_image("png/tubingen.jpg", transform, shape=[style.size(2), style.size(3)])
+style = load_image("../data/data_styletransfer/starry_night.jpg", transform, max_size=400)
+content = load_image("../data/data_styletransfer/tubingen.jpg", transform, shape=[style.size(2), style.size(3)])
 
 # 加载模型
 

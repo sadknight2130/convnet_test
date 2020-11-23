@@ -16,7 +16,7 @@ def initialize_model(model_name, num_classes, feature_extract, use_pretrained=Tr
         model_ft.fc = nn.Linear(num_ftrs, num_classes)
         input_size = 224
     else:
-        print("model not implemented")
+        print("utils not implemented")
         return None, None
 
     return model_ft, input_size

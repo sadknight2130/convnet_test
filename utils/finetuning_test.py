@@ -1,11 +1,11 @@
 import matplotlib.pyplot as plt
 
-from model.model_pretrain import *
-from model.train_eval import *
-from model.data_utils import *
+from utils.model_pretrain import *
+from utils.train_eval import *
+from utils.data_utils import *
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-data_dir = "../hymenoptera_data"
+data_dir = "../data/hymenoptera_data"
 model_name = "resnet"
 num_classes = 2
 batch_size = 32

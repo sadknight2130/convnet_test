@@ -2,14 +2,15 @@ from __future__ import division
 from torchvision import transforms
 import torch
 import matplotlib.pyplot as plt
+import torch.nn as nn
 
-from model.data_utils import load_mnist
-from model.model_gan import *
+from utils.data_utils import load_mnist
+from pytorch_gan.vannilaGAN_test.model_gan import *
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 batch_size=32
-data_path = "./mnist_data"
+data_path = "../../data/mnist_data"
 transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize(mean=0.5,

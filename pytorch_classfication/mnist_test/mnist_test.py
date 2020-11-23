@@ -3,17 +3,20 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 import torch.optim as optim
 from torchvision import datasets, transforms
-from model.convnet import Net
+from utils.convnet import Net
+import os
 
 
-from model.train_eval import train, test
+from utils.train_eval import train, test
 
 
 if __name__ == "__main__":
-    train_data = datasets.MNIST("./mnist_data", train=True, download=True, transform=transforms.Compose([
+    dataroot = os.path.abspath(os.path.join(os.getcwd(), "../.."))
+    image_path = dataroot + "/data/mnist_data"
+    train_data = datasets.MNIST(image_path, train=True, download=False, transform=transforms.Compose([
         transforms.ToTensor(),
     ]))
-    test_data = datasets.MNIST("./mnist_data", train=False, transform=transforms.ToTensor())
+    test_data = datasets.MNIST(image_path, train=False, transform=transforms.ToTensor())
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     batch_size = 32
     train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=0)
@@ -30,4 +33,3 @@ if __name__ == "__main__":
         train(model, device, train_loader, criterion, optimizer, epoch)
         test(model, device, test_loader, criterion)
 
-    torch.save(model.state_dict(), "mnist_cnn.pt")
