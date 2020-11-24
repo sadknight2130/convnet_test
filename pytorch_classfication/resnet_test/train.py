@@ -6,12 +6,12 @@ import matplotlib.pyplot as plt
 import os
 import torch.optim as optim
 from model import resnet34, resnet101
-
+from torchvision.models import resnet34
 
 def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print(device)
-
+    # 注意标准化方法，预训练模型需要使用给定的标准化方法
     data_transform = {
         "train": transforms.Compose([transforms.RandomResizedCrop(224),
                                      transforms.RandomHorizontalFlip(),
@@ -51,7 +51,7 @@ def main():
 
     net = resnet34()
     # load pretrain weights
-    model_weight_path = "./resnet34-pre.pth"
+    model_weight_path = "./resnet34_pre.pth"
     missing_keys, unexpected_keys = net.load_state_dict(torch.load(model_weight_path), strict=False)
     # for param in net.parameters():
     #     param.requires_grad = False
