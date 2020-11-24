@@ -1,14 +1,17 @@
 import torch
-from model import AlexNet
+from model import resnet34
 from PIL import Image
 from torchvision import transforms
 import matplotlib.pyplot as plt
 import json
 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 data_transform = transforms.Compose(
-    [transforms.Resize((224, 224)),
+    [transforms.Resize(256),
+     transforms.CenterCrop(224),
      transforms.ToTensor(),
-     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
 
 # load image
 img = Image.open("../tulip.jpg")
@@ -27,15 +30,15 @@ except Exception as e:
     exit(-1)
 
 # create model
-model = AlexNet(num_classes=5)
+model = resnet34(num_classes=5)
 # load model weights
-model_weight_path = "./AlexNet.pth"
-model.load_state_dict(torch.load(model_weight_path))
+model_weight_path = "./resNet34.pth"
+model.load_state_dict(torch.load(model_weight_path, map_location=device))
 model.eval()
 with torch.no_grad():
     # predict class
     output = torch.squeeze(model(img))
     predict = torch.softmax(output, dim=0)
     predict_cla = torch.argmax(predict).numpy()
-print(class_indict[str(predict_cla)], predict[predict_cla].item())
+print(class_indict[str(predict_cla)], predict[predict_cla].numpy())
 plt.show()

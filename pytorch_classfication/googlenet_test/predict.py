@@ -1,5 +1,5 @@
 import torch
-from model import AlexNet
+from model import GoogLeNet
 from PIL import Image
 from torchvision import transforms
 import matplotlib.pyplot as plt
@@ -27,15 +27,16 @@ except Exception as e:
     exit(-1)
 
 # create model
-model = AlexNet(num_classes=5)
+model = GoogLeNet(num_classes=5, aux_logits=False)
 # load model weights
-model_weight_path = "./AlexNet.pth"
-model.load_state_dict(torch.load(model_weight_path))
+model_weight_path = "./googleNet.pth"
+missing_keys, unexpected_keys = model.load_state_dict(torch.load(model_weight_path), strict=False)
 model.eval()
 with torch.no_grad():
     # predict class
     output = torch.squeeze(model(img))
     predict = torch.softmax(output, dim=0)
     predict_cla = torch.argmax(predict).numpy()
-print(class_indict[str(predict_cla)], predict[predict_cla].item())
+print(predict.numpy()[predict_cla])
+print(class_indict[str(predict_cla)])
 plt.show()
